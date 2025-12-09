@@ -35,9 +35,8 @@ export const Fill = async (Url, lParam, Method,Token) => {
       fetchOptions.body = JSON.stringify(lParam); // Usa lParam como body para POST
     }
 
-    if(Method === 'GET' || Method === 'DELETE' ){
+    if(Method === 'GET' || Method === 'DELETE' || Method === 'PATCH' ){
       Parameters = toQueryString(lParam);
-      console.log(Parameters);
     }
     
     // Si hay headers, agrégalos a las opciones de fetch
@@ -45,12 +44,12 @@ export const Fill = async (Url, lParam, Method,Token) => {
       fetchOptions.headers = headers;
     }
 
-    if(Method === 'GET' || Method === 'DELETE' ){
+    //Se envian como paramentros
+    if(Method === 'GET' || Method === 'DELETE' || Method === 'PATCH' ){
     response = await fetch(BASEURL + Url + '?' + Parameters, fetchOptions);
-    console.log(BASEURL + Url + '?' + Parameters);
     }
 
-    if(Method === 'PUT' || Method === 'POST' || Method === 'PATCH' ){
+    if(Method === 'PUT' || Method === 'POST'  ){
       response = await fetch(BASEURL + Url, fetchOptions);
     }
 
@@ -65,7 +64,7 @@ export const Fill = async (Url, lParam, Method,Token) => {
 
     if(Method === 'POST' && response.status === 201) //Si es 201 es insercion y no devuelvo nada.
     {
-      console.log(response);
+      //console.log(response);
     }
 
   }

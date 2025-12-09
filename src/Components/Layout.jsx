@@ -11,14 +11,26 @@ const Layout = () => {
 
  <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary">
   <Container>
+    
     <Navbar.Brand>
       <Link to="/">Home</Link>
     </Navbar.Brand>
+
     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+
     <Navbar.Collapse id="responsive-navbar-nav">
       <Nav className="me-auto">
+        
         <Nav.Link as={Link} to="NuevosContactos">
           Nuevos Contactos
+        </Nav.Link>
+
+        <Nav.Link as={Link} to="Contactados">
+          Contactados
+        </Nav.Link>
+
+       <Nav.Link as={Link} to="Recontactados">
+          Recontactados
         </Nav.Link>
       </Nav>
     </Navbar.Collapse>
