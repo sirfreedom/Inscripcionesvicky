@@ -3,14 +3,19 @@ import { FindInscripcion } from "../Api/InscripcionHelper";
 import { Contacted } from "../Api/InscripcionHelper";
 import { Error } from "../Api/InscripcionHelper";
 import '../Css/bootstrap.min.css';
+import Spinner from 'react-bootstrap/Spinner';
 
 export const Inscripcion = (props) => {
     const [Nuevos, setNuevos] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
+        let Token;
+        Token = localStorage.getItem('token');
 
-        FindInscripcion(props.IdTipoInscripcion).then(data => {
+        FindInscripcion(props.IdTipoInscripcion,Token).then(data => {
             setNuevos(data);
+            setIsLoading(false);
         });
 
     }, []);
@@ -31,13 +36,21 @@ const CheckIsError = (ischecked,id) => {
         <>
             <h3> Lista {props.TipoInscripcion}  </h3>
 
+            {(isLoading ) && 
+            (
+            <div className="d-flex gap-2 justify-content-center py-5"> 
+            <Spinner animation="border" variant="warning" />
+            <span role="status">Cargando contactos ...</span> 
+            </div>
+            )}
+
             <div className="list-group">
 
                     {Nuevos?.map((item, index) => {
                     return (
-
-                    <a key={'aprincipal' + item.id} id={'aprincipal' + item.id} href="#" className="list-group-item list-group-item-action">
-
+            
+                    <div key={'aprincipal' + item.id} id={'aprincipal' + item.id} className="list-group-item list-group-item-action">
+            
                             <div key={'row' + item.id} id={'row' + item.id} className="row">
 
                                 <div key={'col21' + item.id} className="col-1">
@@ -68,8 +81,9 @@ const CheckIsError = (ischecked,id) => {
 
                             </div>
 
-                        </a>
-
+                        
+                        </div>
+                     
                         )
                     })}
 

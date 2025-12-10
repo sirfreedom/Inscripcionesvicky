@@ -1,7 +1,5 @@
 import Inscripcion from "./Inscripcion"
 
-
-
 export const Recontactados = () => {
 
     
@@ -10,7 +8,6 @@ export const Recontactados = () => {
             <Inscripcion IdTipoInscripcion="3" TipoInscripcion="Recontactados" ></Inscripcion>
         </>
 
-        
                 
                     
 )}

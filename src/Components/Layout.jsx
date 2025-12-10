@@ -22,7 +22,7 @@ const Layout = () => {
       <Nav className="me-auto">
         
         <Nav.Link as={Link} to="NuevosContactos">
-          Nuevos Contactos
+          Nuevos
         </Nav.Link>
 
         <Nav.Link as={Link} to="Contactados">
