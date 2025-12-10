@@ -4,7 +4,7 @@ export const Contactados = () => {
     
         return (
         <>
-             <Inscripcion IdTipoInscripcion="1" TipoInscripcion="Contactados" ></Inscripcion>
+             <Inscripcion IdTipoInscripcion="2" TipoInscripcion="Contactados" ></Inscripcion>
         </>
                     
 )}
