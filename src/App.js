@@ -11,48 +11,74 @@ import { createDate } from './Api/BaseHelper';
 
 function App() {
 
+  const CreateToken = async () => {
+    const DATE_NOW = new Date();
+    const EXPIRATION_DATE_KEY = 'ExpirationDate';
+    const TOKEN_KEY = 'token';
 
-  const CreateToken = () => {
-    const DateNow = new Date();
-    let ExpirationDate;
+    // Función auxiliar para obtener un nuevo token y almacenarlo
+    const fetchAndStoreNewToken = async () => {
+        try {
+            console.log("Obteniendo nuevo token...");
+            // Asegúrate de que getToken maneje errores (idealmente)
+            const data = await getToken('admin', '1234');
+            
+            // Usar Date.parse() para crear la fecha es más seguro y estándar 
+            // si la API devuelve una cadena de fecha ISO.
+            // Si 'createDate' es tu función, asumo que devuelve un objeto Date o una cadena/timestamp
+            const expirationDate = createDate(
+                data.expirationYear, 
+                data.expirationMonth, 
+                data.expirationDay, 
+                data.expirationHour, 
+                data.expirationMinute
+            );
+            
+            // Guardar el timestamp (en milisegundos) es mejor que el objeto Date 
+            // o una cadena de fecha compleja para la comparación
+            localStorage.setItem(EXPIRATION_DATE_KEY, expirationDate.getTime());
+            localStorage.setItem(TOKEN_KEY, data.token);
+            console.log("Token y fecha de expiración actualizados.");
+            return data.token;
+        } catch (error) {
+            console.error("Error al obtener o almacenar el nuevo token:", error);
+            // Re-lanzar el error para que el llamador sepa que falló
+            throw new Error("Fallo al generar el token.");
+        }
+    };
 
-    console.log(localStorage.getItem('ExpirationDate'));
-
-    if (localStorage.length === 0) {
-
-        getToken('admin', '1234').then(async data => {
-        
-        await new Promise(resolve => setTimeout(resolve, 1000)); // un segundo de espera para evitar colapso
-        console.log("Luego de la espera dentro del then");
-
-        ExpirationDate = createDate(data.expirationYear, data.expirationMonth, data.expirationDay, data.expirationHour, data.expirationMinute);
-        localStorage.setItem('ExpirationDate',ExpirationDate);
-        localStorage.setItem('token', data.token);
-      });
+    // 1. Obtener los valores actuales del almacenamiento local
+    const storedExpirationTimestamp = localStorage.getItem(EXPIRATION_DATE_KEY);
+    const storedToken = localStorage.getItem(TOKEN_KEY);
+    
+    // Convertir el timestamp almacenado a número
+    const expirationTime = storedExpirationTimestamp ? parseInt(storedExpirationTimestamp, 10) : null;
+    
+    // 2. Comprobar si el token es nulo o está expirado
+    let isExpired = true;
+    if (expirationTime && storedToken) {
+        // Comprobar si la fecha actual es menor que la fecha de expiración
+        // DATE_NOW.getTime() < expirationTime significa que AÚN ES VÁLIDO
+        isExpired = DATE_NOW.getTime() >= expirationTime;
     }
-        
-    if(localStorage.length > 0){
-      ExpirationDate = localStorage.getItem('ExpirationDate');
-    }
 
-    if ( (localStorage.length !== 0) && (new Date(ExpirationDate).getTime() < new Date(DateNow).getTime() )  ) {
-
-      getToken('admin', '1234').then(async data => 
-      {
-        await new Promise(resolve => setTimeout(resolve, 1000)); // un segundo en la demora para pedir credenciales nuevamente.
-        ExpirationDate = createDate(data.expirationYear, data.expirationMonth, data.expirationDay, data.expirationHour, data.expirationMinute);
-        localStorage.setItem('ExpirationDate',ExpirationDate);
-        localStorage.setItem('token', data.token);
-      });
-      console.log("Actualizo");
-    }
-  }
+    if (!storedToken || isExpired) {
+        // La lógica de actualizar o crear es la misma: ¡solicitar uno nuevo!
+        const logMessage = storedToken  ? "Actualizando token por vencimiento."    : "Creando token por primera vez (no encontrado).";
+        console.log(logMessage);
+        return fetchAndStoreNewToken();
+    } 
+    
+    // 3. Si no ha expirado, devolver el token almacenado
+    console.log("Token existente y válido. Devolviendo token almacenado.");
+    return storedToken;
+};
 
 
   useEffect(() => {
 
-    const observer = new MutationObserver((mutations) => {
-      CreateToken();
+    const observer = new MutationObserver(async (mutations) => {
+      await CreateToken();
       //Aquí podes manejar los cambios en el DOM
       //console.log('El DOM ha cambiado:', mutations);
     });
@@ -63,8 +89,6 @@ function App() {
     };
 
   }, []); // El array vacío asegura que esto se ejecute solo una vez al montar
-
-
 
   return (
     <>
