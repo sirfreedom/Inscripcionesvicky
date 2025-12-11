@@ -8,8 +8,7 @@ import Spinner from 'react-bootstrap/Spinner';
 export const Inscripcion = (props) => {
     const [Nuevos, setNuevos] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const storedToken = localStorage.getItem('token');
-
+    
     useEffect(() => {
         let Token;
         Token = localStorage.getItem('token');
@@ -37,7 +36,7 @@ const CheckIsError = (ischecked,id) => {
         <>
             <h3> Lista {props.TipoInscripcion}  </h3>
 
-            {(isLoading && storedToken.length > 0) && 
+            {(isLoading) && 
             (
             <div className="d-flex gap-2 justify-content-center py-5"> 
             <Spinner animation="border" variant="warning" />
@@ -76,7 +75,7 @@ const CheckIsError = (ischecked,id) => {
                                         target="_blank"
                                     >
                                         <div className={item.tiponumero === 'ERROR' ? 'spinner-grow text-danger' : 'hidden'} role="status" > </div>
-                                        - {item.telefono} - {item.nombre} - {item.carrera} - {item?.fecha}
+                                        - {item.telefono} - {item.nombre} - {item.carrera} - {item.fecha}
                                     </a>
                                 </div>
 

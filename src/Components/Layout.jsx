@@ -3,8 +3,33 @@ import Navbar from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import '../Css/Layout.css';
+import { useEffect } from "react";
+import {CreateToken} from '../Helper/TokenHelper';
 
 const Layout = () => {
+
+        const initializeToken = async () => {
+            try {
+                await CreateToken();
+            } catch (error) {
+                // Manejo de errores si la generación falla por completo
+                console.error("Fallo crítico en la inicialización del token:", error);
+            } finally {
+
+            }
+        };
+
+        useEffect(() => {
+        let Token;
+        Token = localStorage.getItem('token');
+
+        if (Token === null)
+        {
+            initializeToken();
+        }
+
+      }, []);
+
 
   return (
 <>
