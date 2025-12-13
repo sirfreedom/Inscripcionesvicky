@@ -19,7 +19,7 @@ return data;
 }
 
 
-export const Contacted = async (id,iscontacted) =>
+export const Contacted = async (id,iscontacted,token) =>
 {
 let data;
 let url = 'api/Inscripcion/Contacted';
@@ -34,6 +34,8 @@ catch(ex)
 }
 return data;
 }
+
+
 
 export const Error = async (id,iserror) =>
 {

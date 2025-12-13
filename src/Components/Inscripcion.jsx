@@ -4,32 +4,47 @@ import { Contacted } from "../Api/InscripcionHelper";
 import { Error } from "../Api/InscripcionHelper";
 import '../Css/bootstrap.min.css';
 import Spinner from 'react-bootstrap/Spinner';
+import { CreateToken } from '../Helper/TokenHelper';
 
 export const Inscripcion = (props) => {
     const [Nuevos, setNuevos] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    
-    useEffect(() => {
-        let Token;
-        Token = localStorage.getItem('token');
 
-        FindInscripcion(props.IdTipoInscripcion,Token).then(data => {
-            setNuevos(data);
-            setIsLoading(false);
-        });
+    useEffect(() => {
+
+        initializeToken();
 
     }, []);
 
 
-const CheckIsContacted = (ischecked,id) => {
-    Contacted(ischecked,id).then(data => {
-    });
+const CheckIsContacted = async (ischecked,id) => 
+{
+    await Contacted(ischecked,id);
 };
 
-const CheckIsError = (ischecked,id) => {
-    Error(ischecked,id).then(data => {
-    });
-    
+const CheckIsError = async (ischecked,id) => 
+{
+    await Error(ischecked,id);
+};
+
+const initializeToken = async () => 
+{
+    let Token;
+    let data;
+    try 
+    {
+        Token = await CreateToken();
+        data = await FindInscripcion(props.IdTipoInscripcion, Token);
+        setNuevos(data);
+        setIsLoading(false);
+    } 
+    catch (error) 
+    {
+        console.error("Fallo crítico en la inicialización del token:", error);
+    } 
+    finally 
+    {
+    }
 };
 
     return (
@@ -53,7 +68,7 @@ const CheckIsError = (ischecked,id) => {
             
                             <div key={'row' + item.id} id={'row' + item.id} className="row">
 
-                                <div key={'col21' + item.id} className="col-1">
+                                <div key={'col21' + item.id} className="col-xl-1 col-md-2 col-xxl-1 col-lg-2 col-sm-3">
                                     <a href="#" key={'a_danger' + item.id} className="list-group-item list-group-item-action list-group-item-danger">
                                         <input key={'chk1' + item.id} id={'chk1' + item.id} type="checkbox" defaultChecked={item.iserror} 
                                         onChange={e => CheckIsError (item.id,e.target.checked)}
@@ -61,7 +76,7 @@ const CheckIsError = (ischecked,id) => {
                                     </a>
                                 </div>
 
-                                <div key={'col22' + item.id} className="col-1">
+                                <div key={'col22' + item.id} className="col-xl-1 col-md-2 col-xxl-1 col-lg-2 col-sm-3">
                                     <a href="#" key={'a_info' + item.id} className="list-group-item list-group-item-action list-group-item-info">
                                         <input key={'chk2' + item.id} id={'chk2' + item.id} type="checkbox" defaultChecked={item.iscontacted} 
                                         onChange={e => CheckIsContacted(item.id,e.target.checked)}
@@ -69,21 +84,18 @@ const CheckIsError = (ischecked,id) => {
                                     </a>
                                 </div>
 
-                                <div key={'col23' + item.id} className="col-10">
+                                <div key={'col23' + item.id} className="col-xl-10 col-md-8 col-xxl-10 col-lg-8 col-sm-6">
                                     <a key={'alink' + item.id} id={'alink' + item.id}
                                         href={`https://api.whatsapp.com/send?phone=+${item.telefono}&text=${item.texto}`}
                                         target="_blank"
                                     >
-                                        <div className={item.tiponumero === 'ERROR' ? 'spinner-grow text-danger' : 'hidden'} role="status" > </div>
+                                      <div className={item.tiponumero === 'ERROR' ? 'spinner-grow text-danger' : 'hidden'} role="status" > 
+                                      </div>
                                         - {item.telefono} - {item.nombre} - {item.carrera} - {item.fecha}
                                     </a>
                                 </div>
-
                             </div>
-
-                        
                         </div>
-                     
                         )
                     })}
 

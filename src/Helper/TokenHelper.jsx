@@ -3,9 +3,19 @@ import { createDate } from '../Api/BaseHelper';
 
 
 export const CreateToken = async () => {
-    const DATE_NOW = new Date();
-    const EXPIRATION_DATE_KEY = 'ExpirationDate';
+   const DATE_NOW = new Date();
+    const EXPIRATION_DATE_KEY = 'ff'; // Clave para la fecha de expiración (milisegundos)
+    const EXPIRATION_DATE_YY = 'yy';
+    const EXPIRATION_DATE_MM = 'mm';
+    const EXPIRATION_DATE_DD = 'dd';
+    const EXPIRATION_DATE_H = 'h';
+    const EXPIRATION_DATE_M = 'm';
     const TOKEN_KEY = 'token';
+    let isExpired = true;
+    let logMessage;
+    let storedExpirationTimestamp;
+    let storedToken;
+    let expirationTime;
 
     const fetchAndStoreNewToken = async () => {
     try {
@@ -20,9 +30,13 @@ export const CreateToken = async () => {
                 data.expirationMinute
             );
             
-            localStorage.setItem(EXPIRATION_DATE_KEY, expirationDate.getTime());
-            localStorage.setItem(TOKEN_KEY, data.token);
-            console.log("Token y fecha de expiración actualizados.");
+        localStorage.setItem(EXPIRATION_DATE_KEY, expirationDate.getTime());
+        localStorage.setItem(EXPIRATION_DATE_YY,data.expirationYear);
+        localStorage.setItem(EXPIRATION_DATE_MM,data.expirationMonth);
+        localStorage.setItem(EXPIRATION_DATE_DD,data.expirationDay);
+        localStorage.setItem(EXPIRATION_DATE_H,data.expirationHour);
+        localStorage.setItem(EXPIRATION_DATE_M,data.expirationMinute);
+        localStorage.setItem(TOKEN_KEY, data.token);
             return data.token;
         } 
         catch (error) 
@@ -32,17 +46,19 @@ export const CreateToken = async () => {
         }
     };
 
-    const storedExpirationTimestamp = localStorage.getItem(EXPIRATION_DATE_KEY);
-    const storedToken = localStorage.getItem(TOKEN_KEY);
-    const expirationTime = storedExpirationTimestamp ? parseInt(storedExpirationTimestamp, 10) : null;
-    
-    let isExpired = true;
+
+        debugger;
+
+    storedExpirationTimestamp = localStorage.getItem(EXPIRATION_DATE_KEY);
+    storedToken = localStorage.getItem(TOKEN_KEY);
+    expirationTime = storedExpirationTimestamp ? parseInt(storedExpirationTimestamp, 10) : null;
+
     if (expirationTime && storedToken) {
         isExpired = DATE_NOW.getTime() >= expirationTime;
     }
 
     if (!storedToken || isExpired) {
-        const logMessage = storedToken  ? "Actualizando token por vencimiento."    : "Creando token por primera vez (no encontrado).";
+        logMessage = storedToken  ? "Actualizando token por vencimiento." : "Creando token por primera vez (no encontrado).";
         console.log(logMessage);
         return fetchAndStoreNewToken();
     } 

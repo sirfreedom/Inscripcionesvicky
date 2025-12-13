@@ -11,6 +11,7 @@ import { useEffect } from "react";
 
 function App() {
 
+  /*
 useEffect(() => 
   {
     const observer = new MutationObserver(async (mutations) => 
@@ -24,7 +25,7 @@ useEffect(() =>
     };
   }, []);
 
-
+*/
 
 
   return (
