@@ -66,34 +66,43 @@ const initializeToken = async () =>
             
                     <div key={'aprincipal' + item.id} id={'aprincipal' + item.id} className="list-group-item list-group-item-action">
             
-                            <div key={'row' + item.id} id={'row' + item.id} className="row">
+                            <div className="row">
 
-                                <div key={'col21' + item.id} className="col-xl-1 col-md-2 col-xxl-1 col-lg-2 col-sm-3">
+                                <div key={'col21' + item.id} className="col-xxl-2 col-xl-2 col-lg-2 col-md-2 col-sm-5">
                                     <a href="#" key={'a_danger' + item.id} className="list-group-item list-group-item-action list-group-item-danger">
                                         <input key={'chk1' + item.id} id={'chk1' + item.id} type="checkbox" defaultChecked={item.iserror} 
                                         onChange={e => CheckIsError (item.id,e.target.checked)}
                                         /> X
                                     </a>
                                 </div>
-
-                                <div key={'col22' + item.id} className="col-xl-1 col-md-2 col-xxl-1 col-lg-2 col-sm-3">
+                                <div key={'col22' + item.id} className="col-xxl-2 col-xl-2 col-lg-2 col-md-2 col-sm-5">
                                     <a href="#" key={'a_info' + item.id} className="list-group-item list-group-item-action list-group-item-info">
                                         <input key={'chk2' + item.id} id={'chk2' + item.id} type="checkbox" defaultChecked={item.iscontacted} 
                                         onChange={e => CheckIsContacted(item.id,e.target.checked)}
                                         /> ✓
                                     </a>
                                 </div>
+                                <div className={item.tiponumero === 'ERROR' ? 'col spinner-grow text-danger' : 'hidden'}  >
+                                    {(item.tiponumero === 'Normal' ? '' : ' ERROR ')}
+                                </div>
+                            </div>
 
-                                <div key={'col23' + item.id} className="col-xl-10 col-md-8 col-xxl-10 col-lg-8 col-sm-6">
+                            <div className="row">
+                              <div className="col">
+
+                              </div>
+                              <div key={'col23' + item.id} className="col-xl-9 col-md-9 col-xxl-9 col-lg-9 col-sm-11">
                                     <a key={'alink' + item.id} id={'alink' + item.id}
                                         href={`https://api.whatsapp.com/send?phone=+${item.telefono}&text=${item.texto}`}
                                         target="_blank"
                                     >
-                                      <div className={item.tiponumero === 'ERROR' ? 'spinner-grow text-danger' : 'hidden'} role="status" > 
-                                      </div>
-                                        - {item.telefono} - {item.nombre} - {item.carrera} - {item.fecha}
+                                      {item.telefono} - {item.nombre} - {item.carrera}
                                     </a>
-                                </div>
+                             </div>
+                             
+                              <div>
+                                {item.fecha}
+                              </div>
                             </div>
                         </div>
                         )

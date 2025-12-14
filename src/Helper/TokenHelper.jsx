@@ -1,7 +1,6 @@
 import { getToken } from '../Api/UserHelper';
 import { createDate } from '../Api/BaseHelper';
 
-
 export const CreateToken = async () => {
    const DATE_NOW = new Date();
     const EXPIRATION_DATE_KEY = 'ff'; // Clave para la fecha de expiración (milisegundos)
@@ -47,8 +46,6 @@ export const CreateToken = async () => {
     };
 
 
-        debugger;
-
     storedExpirationTimestamp = localStorage.getItem(EXPIRATION_DATE_KEY);
     storedToken = localStorage.getItem(TOKEN_KEY);
     expirationTime = storedExpirationTimestamp ? parseInt(storedExpirationTimestamp, 10) : null;
@@ -59,7 +56,6 @@ export const CreateToken = async () => {
 
     if (!storedToken || isExpired) {
         logMessage = storedToken  ? "Actualizando token por vencimiento." : "Creando token por primera vez (no encontrado).";
-        console.log(logMessage);
         return fetchAndStoreNewToken();
     } 
         

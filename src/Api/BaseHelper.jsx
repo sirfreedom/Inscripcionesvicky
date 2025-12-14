@@ -1,4 +1,3 @@
-
 const BASEURL = 'https://sirfreedom.somee.com/';
 //const BASEURL = 'https://localhost:5000/';
  

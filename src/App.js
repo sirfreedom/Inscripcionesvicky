@@ -5,27 +5,9 @@ import NoPage from "./Components/NoPage";
 import { NuevosContactos } from "./Components/NuevosContactos";
 import { Contactados} from "./Components/Contactados";
 import { Recontactados} from "./Components/Recontactados";
-import {CreateToken} from './Helper/TokenHelper';
-
-import { useEffect } from "react";
+import {Supervision} from "./Components/Supervision";
 
 function App() {
-
-  /*
-useEffect(() => 
-  {
-    const observer = new MutationObserver(async (mutations) => 
-    {
-      await CreateToken();
-      //console.log('El DOM ha cambiado:', mutations);
-    });
-    observer.observe(document.body, { childList: true, subtree: true, });
-        return () => {
-      observer.disconnect();
-    };
-  }, []);
-
-*/
 
 
   return (
@@ -41,6 +23,7 @@ useEffect(() =>
                   <Route path="NuevosContactos" element={<NuevosContactos />} />
                   <Route path="Contactados" element={<Contactados />} />
                   <Route path="Recontactados" element={<Recontactados />} />
+                  <Route path="Supervision" element={<Supervision />} />
                   <Route path="*" element={<NoPage />} />
                 </Route>
               </Routes>
