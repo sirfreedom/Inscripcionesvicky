@@ -1,13 +1,41 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useState, useEffect } from "react";
 import Layout from "./Components/Layout";
 import Home from "./Components/Home";
 import NoPage from "./Components/NoPage";
-import { NuevosContactos } from "./Components/NuevosContactos";
-import { Contactados} from "./Components/Contactados";
-import { Recontactados} from "./Components/Recontactados";
-import {Supervision} from "./Components/Supervision";
+import {Inscripcion} from "./Components/Inscripcion";
+import { CreateToken } from './Helper/TokenHelper';
+import { List } from "./Api/TipoInscripcionHelper";
 
 function App() {
+
+    const [TipoInscripcion, setTipoInscripcion] = useState([]);
+
+    useEffect(() => {
+
+      CreateMenu();
+
+    }, []);
+
+
+const CreateMenu = async () => 
+{
+    let Token;
+    let data;
+    try 
+    {
+        Token = await CreateToken();
+        data = await List(Token);
+        setTipoInscripcion(data);
+    } 
+    catch (error) 
+    {
+        console.error("Fallo crítico en la inicialización del token:", error);
+    } 
+    finally 
+    {
+    }
+};
 
 
   return (
@@ -20,10 +48,13 @@ function App() {
               <Routes>
                 <Route path="/" element={<Layout />}>
                   <Route index element={<Home />} />
-                  <Route path="NuevosContactos" element={<NuevosContactos />} />
-                  <Route path="Contactados" element={<Contactados />} />
-                  <Route path="Recontactados" element={<Recontactados />} />
-                  <Route path="Supervision" element={<Supervision />} />
+
+                  {TipoInscripcion?.map((item, index) => {
+                  return (
+                  <Route key={"route" + index} path={item.tipo} element={<Inscripcion key={index} IdTipoInscripcion={item.id} TipoInscripcion={item.tipo} ></Inscripcion>} />
+                  )
+                  })}
+
                   <Route path="*" element={<NoPage />} />
                 </Route>
               </Routes>
