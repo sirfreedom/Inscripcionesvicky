@@ -14,7 +14,6 @@ const AuthLogin = () => {
       getToken(User,Pass).then(oToken => {
       sResult = oToken;
       localStorage.setItem('token', JSON.stringify(sResult));
-      console.log(oToken);
       });
       
       if (sResult == '')

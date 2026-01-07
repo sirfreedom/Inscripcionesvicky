@@ -7,7 +7,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import { CreateToken } from '../Helper/TokenHelper';
 
 export const Inscripcion = (props) => {
-    const [Nuevos, setNuevos] = useState([]);
+    const [Contactos, setContactos] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -35,7 +35,7 @@ const initializeToken = async () =>
     {
         Token = await CreateToken();
         data = await FindInscripcion(props.IdTipoInscripcion, Token);
-        setNuevos(data);
+        setContactos(data);
         setIsLoading(false);
     } 
     catch (error) 
@@ -61,7 +61,7 @@ const initializeToken = async () =>
 
             <div className="list-group">
 
-                    {Nuevos?.map((item, index) => {
+                    {Contactos?.map((item, index) => {
                     return (
             
                     <div key={'aprincipal' + item.id} id={'aprincipal' + item.id} className="list-group-item list-group-item-action">

@@ -1,10 +1,43 @@
 import { Outlet, Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 import Navbar from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import '../Css/Layout.css';
+import { CreateToken } from '../Helper/TokenHelper';
+import { List } from "../Api/TipoInscripcionHelper";
 
 const Layout = () => {
+
+    const [TipoInscripcion, setTipoInscripcion] = useState([]);
+
+    useEffect(() => {
+
+      CreateMenu();
+
+    }, []);
+
+
+const CreateMenu = async () => 
+{
+    let Token;
+    let data;
+    try 
+    {
+        Token = await CreateToken();
+        data = await List(Token);
+        setTipoInscripcion(data);
+        console.log(data);
+    } 
+    catch (error) 
+    {
+        console.error("Fallo crítico en la inicialización del token:", error);
+    } 
+    finally 
+    {
+    }
+};
+
 
   return (
 <>
@@ -19,25 +52,17 @@ const Layout = () => {
     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
 
     <Navbar.Collapse id="responsive-navbar-nav">
-      <Nav className="me-auto">
-        
-        <Nav.Link as={Link} to="NuevosContactos">
-          Nuevos
-        </Nav.Link>
 
-        <Nav.Link as={Link} to="Contactados">
-          Contactados
+      {TipoInscripcion?.map((item, index) => {
+        return (
+        <Nav className="me-auto">
+        <Nav.Link key={"nav" + index} as={Link} to={item.tipo} >
+        {item.tipo}
         </Nav.Link>
-
-        <Nav.Link as={Link} to="Recontactados">
-          Recontactados
-        </Nav.Link>
-
-        <Nav.Link as={Link} to="Supervision">
-          Supervision
-        </Nav.Link>
-
-      </Nav>
+        </Nav>
+        )
+        })}
+      
     </Navbar.Collapse>
   </Container>
 </Navbar>
