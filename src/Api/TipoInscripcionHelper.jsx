@@ -4,7 +4,7 @@ export const List = async (token) =>
 {
 let data;
 let tempdata;
-let url = 'api/TipoInscripcion/List';
+let url = 'api/TipoInscripcion/ListMenu';
 let param =  [];
 try 
 {
