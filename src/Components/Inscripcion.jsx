@@ -82,6 +82,12 @@ const initializeToken = async () =>
                                         /> ✓
                                     </a>
                                 </div>
+                                <div key={'col22' + item.id} className="col-xxl-2 col-xl-2 col-lg-2 col-md-2 col-sm-5">
+                                    <a href={`https://api.whatsapp.com/send?phone=+${item.telefono}&text=${item.sinvacante}`} key={'a_danger' + item.id} className="list-group-item list-group-item-action list-group-item-danger">
+                                        Sin Vacantes
+                                    </a>
+                                </div>
+
                                 <div className={item.tiponumero === 'ERROR' ? 'col spinner-grow text-danger' : 'hidden'}  >
                                     {(item.tiponumero === 'Normal' ? '' : ' ERROR ')}
                                 </div>
@@ -98,16 +104,7 @@ const initializeToken = async () =>
                                       {item.telefono} - {item.nombre} - {item.carrera}
                                     </a>
                               </div>
-
-                              <div key={'col24' + item.id} className="col-xl-9 col-md-9 col-xxl-9 col-lg-9 col-sm-11">
-                                    <a key={'alink' + item.id} id={'alink' + item.id}
-                                        href={`https://api.whatsapp.com/send?phone=+${item.telefono}&text=${item.sinvacantes}`}
-                                        target="_blank"
-                                    >
-                                      SIN VACANTES
-                                    </a>
-                              </div>
-                             
+                                        
                               <div>
                                 {item.fecha}
                               </div>
