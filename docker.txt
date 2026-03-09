@@ -1,3 +1,12 @@
 docker build -t inscripcionesvicky .
 docker run -d -p 8083:8083 --name inscripcionesvicky inscripcionesvicky
 docker network connect appmaker inscripcionesvicky
+
+
+
+-- exportar
+docker save -o C:\download\webapi.tar webapi
+
+
+--importar
+docker load -i C:\download\webapi.tar
