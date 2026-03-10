@@ -76,20 +76,27 @@ const initializeToken = async () =>
                                     </a>
                                 </div>
                                 <div key={'col22' + item.id} className="col-xxl-2 col-xl-2 col-lg-2 col-md-2 col-sm-5">
-                                    <a href="#" key={'a_info' + item.id} className="list-group-item list-group-item-action list-group-item-info">
+                                    <a href={`https://api.whatsapp.com/send?phone=+${item.telefono}&text=${item.texto}`} key={'a_info' + item.id} className="list-group-item list-group-item-action list-group-item-info">
                                         <input key={'chk2' + item.id} id={'chk2' + item.id} type="checkbox" defaultChecked={item.iscontacted} 
                                         onChange={e => CheckIsContacted(item.id,e.target.checked)}
                                         /> ✓
                                     </a>
                                 </div>
                                 <div key={'col22' + item.id} className="col-xxl-2 col-xl-2 col-lg-2 col-md-2 col-sm-5">
-                                    <a href={`https://api.whatsapp.com/send?phone=+${item.telefono}&text=${item.sinvacante}`} key={'a_danger' + item.id} className="list-group-item list-group-item-action list-group-item-danger">
-                                        Sin Vacantes
+                                    <a href={`https://api.whatsapp.com/send?phone=+${item.telefono}&text=${item.sinvacante}`} key={'a_warning' + item.id} className="list-group-item list-group-item-action list-group-item-warning">
+                                        <input key={'chk3' + item.id} id={'chk3' + item.id} type="checkbox" defaultChecked={item.iscontacted} 
+                                        onChange={e => CheckIsContacted(item.id,e.target.checked)}
+                                        /> Sin Vacantes
                                     </a>
                                 </div>
 
                                 <div className={item.tiponumero === 'ERROR' ? 'col spinner-grow text-danger' : 'hidden'}  >
                                     {(item.tiponumero === 'Normal' ? '' : ' ERROR ')}
+                                </div>
+                            </div>
+                            <div className="row">
+                                <div className="col">
+                                    <br></br>
                                 </div>
                             </div>
 
