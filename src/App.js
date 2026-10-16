@@ -4,7 +4,6 @@ import Layout from "./Components/Layout";
 import Home from "./Components/Home";
 import NoPage from "./Components/NoPage";
 import {Inscripcion} from "./Components/Inscripcion";
-import { CreateToken } from './Helper/TokenHelper';
 import { List } from "./Api/TipoInscripcionHelper";
 
 function App() {
@@ -24,7 +23,7 @@ const CreateMenu = async () =>
     let data;
     try 
     {
-        Token = await CreateToken();
+        Token = 'KNj5WcPJ9n9TShJRxNVt2znWa+GBs7ci9X4lW0XPTSBcN6GrSAuqa1hlDeeg/Rh7';
         data = await List(Token);
         setTipoInscripcion(data);
     } 
