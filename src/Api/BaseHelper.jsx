@@ -1,4 +1,4 @@
-const BASEURL = 'https://sirfreedom.somee.com/';
+const BASEURL = 'https://hockeystore.somee.com/';
 //const BASEURL = 'https://localhost:5000/';
 //const BASEURL = 'http://localhost:8080/';
  
