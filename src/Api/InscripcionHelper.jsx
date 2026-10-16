@@ -1,5 +1,4 @@
 import { Fill } from './BaseHelper';
-import { MASTERTOKEN } from '@/Api/BaseHelper';
 
 export const FindInscripcion = async (id,token) =>
 {
@@ -9,7 +8,7 @@ let url = 'api/Inscripcion/Find';
 let param =  [{ "IdTipoContacto": id }] ;
 try 
 {
-    tempdata = await Fill(url,param,'GET',MASTERTOKEN);
+    tempdata = await Fill(url,param,'GET',token);
     data = await tempdata.inscripciones;
 }
 catch(ex)
