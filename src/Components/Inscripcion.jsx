@@ -4,7 +4,7 @@ import { Contacted } from "../Api/InscripcionHelper";
 import { Error } from "../Api/InscripcionHelper";
 import '../Css/bootstrap.min.css';
 import Spinner from 'react-bootstrap/Spinner';
-import { CreateToken } from '../Helper/TokenHelper';
+
 
 export const Inscripcion = (props) => {
     const [Contactos, setContactos] = useState([]);
@@ -33,7 +33,6 @@ const initializeToken = async () =>
     let data;
     try 
     {
-        Token = await CreateToken();
         data = await FindInscripcion(props.IdTipoInscripcion, Token);
         setContactos(data);
         setIsLoading(false);
