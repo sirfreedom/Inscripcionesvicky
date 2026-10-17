@@ -29,11 +29,10 @@ const CheckIsError = async (ischecked,id) =>
 
 const initializeToken = async () => 
 {
-    let Token;
     let data;
     try 
     {
-        data = await FindInscripcion(props.IdTipoInscripcion, Token);
+        data = await FindInscripcion(1, '');
         setContactos(data);
         setIsLoading(false);
     } 
