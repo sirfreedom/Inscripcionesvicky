@@ -22,7 +22,7 @@ const CreateMenu = async () =>
     let data;
     try 
     {
-        data = await List(Token);
+        data = await List();
         setTipoInscripcion(data);
 
     } 
