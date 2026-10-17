@@ -35,6 +35,9 @@ const initializeToken = async () =>
         data = await FindInscripcion(1);
         setContactos(data);
         setIsLoading(false);
+
+        console.log('dsadasdas');
+
     } 
     catch (error) 
     {

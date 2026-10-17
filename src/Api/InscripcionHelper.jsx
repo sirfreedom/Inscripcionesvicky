@@ -1,6 +1,7 @@
 import { Fill } from './BaseHelper';
 
-export const FindInscripcion = async (id,token) =>
+
+export const FindInscripcion = async (id) =>
 {
 let data;
 let tempdata;
@@ -8,8 +9,8 @@ let url = 'api/Inscripcion/Find';
 let param =  [{ "IdTipoContacto": id }] ;
 try 
 {
-    tempdata = await Fill(url,param,'GET',token);
-    data = await tempdata.inscripciones;
+    tempdata = await Fill(url,param,'GET');
+    data = await tempdata;
 }
 catch(ex)
 {
@@ -19,7 +20,7 @@ return data;
 }
 
 
-export const Contacted = async (id,iscontacted,token) =>
+export const Contacted = async (id,iscontacted) =>
 {
 let data;
 let url = 'api/Inscripcion/Contacted';

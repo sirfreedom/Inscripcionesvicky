@@ -13,6 +13,7 @@ const Layout = () => {
     useEffect(() => {
 
       CreateMenu();
+      console.log('ddsadasdasdasd');
 
     }, []);
 
@@ -24,6 +25,7 @@ const CreateMenu = async () =>
     {
         data = await List();
         setTipoInscripcion(data);
+        console.log(data);
 
     } 
     catch (error) 
