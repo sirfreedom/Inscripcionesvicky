@@ -32,7 +32,7 @@ const initializeToken = async () =>
     let data;
     try 
     {
-        data = await FindInscripcion(1, '');
+        data = await FindInscripcion(1);
         setContactos(data);
         setIsLoading(false);
     } 

@@ -4,7 +4,6 @@ import Navbar from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import '../Css/Layout.css';
-import { CreateToken } from '../Helper/TokenHelper';
 import { List } from "../Api/TipoInscripcionHelper";
 
 const Layout = () => {
@@ -20,14 +19,12 @@ const Layout = () => {
 
 const CreateMenu = async () => 
 {
-    let Token;
     let data;
     try 
     {
-        Token = await CreateToken();
         data = await List(Token);
         setTipoInscripcion(data);
-        console.log(data);
+
     } 
     catch (error) 
     {
